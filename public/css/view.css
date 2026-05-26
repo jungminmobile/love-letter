@@ -19,7 +19,10 @@
   --text-light: #b57088;
 }
 
-html, body { height: 100%; }
+html {
+  height: 100%;
+  height: -webkit-fill-available;
+}
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
@@ -27,6 +30,10 @@ body {
   color: var(--text-dark);
   overflow: hidden;
   height: 100%;
+  height: -webkit-fill-available;
+  /* iOS에서 bounce 스크롤 방지 */
+  position: fixed;
+  width: 100%;
 }
 
 .page {
@@ -195,37 +202,38 @@ body {
 .peek-lines span:nth-child(3) { width: 55%; }
 
 /* ── 봉투 날개 (위쪽, 열리는 삼각형) ── */
+/* iOS Safari: clip-path와 transform을 같은 요소에 쓰면 버그 → 분리 */
 .env-flap {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
   height: 55%;
-  background: linear-gradient(170deg, var(--env-flap) 0%, var(--env-front) 100%);
-  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  -webkit-transform-origin: center top;
   transform-origin: center top;
+  -webkit-transform: rotateX(0deg);
   transform: rotateX(0deg);
   z-index: 3;
+  -webkit-transition: -webkit-transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
   transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 6px 6px 0 0;
   cursor: pointer;
 }
 
-/* 봉투 날개 안쪽 (반전됐을 때 보이는 면) */
-.env-flap::after {
-  content: '';
+/* 모양(clip-path)은 자식 요소에만 적용 */
+.env-flap-inner {
   position: absolute;
   inset: 0;
-  background: linear-gradient(170deg, #8b0f27 0%, #a01228 100%);
-  clip-path: inherit;
-  transform: scaleX(-1);
-  backface-visibility: visible;
-  opacity: 0;
+  background: linear-gradient(170deg, var(--env-flap) 0%, var(--env-front) 100%);
+  -webkit-clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  border-radius: 6px 6px 0 0;
 }
 
 /* 열릴 때 */
 .envelope.opening .env-flap,
 .envelope.open .env-flap {
+  -webkit-transform: rotateX(-185deg);
   transform: rotateX(-185deg);
 }
 
@@ -313,8 +321,10 @@ body {
 .letter-scroll {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 48px 0 0;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .letter-paper-full {

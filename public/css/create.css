@@ -22,7 +22,9 @@ body {
   background: var(--rose-bg);
   color: var(--text-dark);
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   padding-bottom: 40px;
+  -webkit-text-size-adjust: 100%;
 }
 
 /* ── Header ── */

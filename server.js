@@ -170,7 +170,9 @@ app.get('/letter/:id', (req, res) => {
           </div>
 
           <!-- 봉투 날개 (열리는 부분) -->
-          <div class="env-flap" id="envFlap"></div>
+          <div class="env-flap" id="envFlap">
+            <div class="env-flap-inner"></div>
+          </div>
 
           <!-- 하트 장식 -->
           <div class="env-heart">💌</div>
