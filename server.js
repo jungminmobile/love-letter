@@ -36,6 +36,13 @@ const upload = multer({
 });
 
 app.use(express.json());
+
+// ngrok 경고 페이지 우회 (CSS/JS 로딩 문제 해결)
+app.use((req, res, next) => {
+  res.set('ngrok-skip-browser-warning', 'true');
+  next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(UPLOADS_DIR));
 
