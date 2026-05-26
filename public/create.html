@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>💌 편지 작성</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/create.css">
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-inner">
+      <span class="logo">💌</span>
+      <h1 class="header-title">편지 작성</h1>
+    </div>
+  </header>
+
+  <!-- 메인 폼 -->
+  <main class="main">
+    <form id="letterForm" class="letter-form" enctype="multipart/form-data">
+
+      <!-- 제목 -->
+      <div class="field-group">
+        <label class="field-label" for="titleInput">편지 제목 <span class="optional">(선택)</span></label>
+        <input
+          type="text"
+          id="titleInput"
+          name="title"
+          class="field-input"
+          placeholder="예: 오늘 네가 너무 보고 싶어서"
+          maxlength="50"
+        >
+      </div>
+
+      <!-- 편지 본문 -->
+      <div class="field-group">
+        <label class="field-label" for="textInput">편지 내용</label>
+        <div class="textarea-wrapper">
+          <textarea
+            id="textInput"
+            name="text"
+            class="letter-textarea"
+            placeholder="하고 싶은 말을 자유롭게 써주세요..."
+            required
+          ></textarea>
+          <div class="line-overlay" aria-hidden="true"></div>
+        </div>
+        <p class="char-count"><span id="charCount">0</span>자</p>
+      </div>
+
+      <!-- 사진 업로드 -->
+      <div class="field-group">
+        <label class="field-label">사진 추가 <span class="optional">(최대 5장)</span></label>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="photoInput" name="photos" accept="image/*" multiple class="file-input">
+          <div class="upload-placeholder" id="uploadPlaceholder">
+            <span class="upload-icon">📷</span>
+            <p class="upload-text">사진을 드래그하거나 클릭해서 추가하세요</p>
+            <p class="upload-sub">JPG, PNG, HEIC · 최대 5장 · 각 15MB 이하</p>
+          </div>
+        </div>
+
+        <!-- 사진 미리보기 -->
+        <div class="preview-grid" id="previewGrid"></div>
+      </div>
+
+      <!-- 제출 버튼 -->
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="submit-icon">💌</span>
+        <span class="submit-text">편지 완성하기</span>
+      </button>
+
+    </form>
+  </main>
+
+  <!-- 완성 모달 (공유) -->
+  <div class="modal-overlay" id="shareModal">
+    <div class="modal">
+      <div class="modal-top">
+        <div class="modal-envelope">💌</div>
+        <h2 class="modal-title">편지가 완성됐어요!</h2>
+        <p class="modal-desc">아래 방법으로 편지를 보내보세요</p>
+      </div>
+
+      <div class="modal-link-box">
+        <input type="text" id="shareUrl" class="link-input" readonly>
+        <button class="copy-inline-btn" id="copyInlineBtn">복사</button>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn kakao-btn" id="modalKakaoBtn">
+          <span>💬</span> 카카오톡으로 보내기
+        </button>
+        <button class="modal-btn insta-btn" id="modalInstaBtn">
+          <span>📸</span> 인스타 DM 링크 복사
+        </button>
+      </div>
+
+      <button class="modal-close" id="modalClose">닫기</button>
+    </div>
+  </div>
+
+  <!-- 토스트 -->
+  <div class="toast" id="toast"></div>
+
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" crossorigin="anonymous"></script>
+  <script src="/js/create.js"></script>
+</body>
+</html>
